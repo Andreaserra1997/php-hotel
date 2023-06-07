@@ -50,6 +50,19 @@ $hotels = [
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous" defer></script>
 </head>
 <body>
+    <form action="" method="get">
+        <div>
+            <label for="parking">Parcheggio</label>
+            <select id="parking" value="Scegli">
+                <option name="" selected>Scegli</option>
+                <option name="">Con Parcheggio</option>
+            </select>
+            <label for="vote">Voto</label>
+            <input type="number" name="" id="vote">
+            <button class="btn btn-primary" type="submit">Cerca</button>
+            <button class="btn btn-secondary" type="reset">Annulla</button>
+		</div>
+    </form>
     <table class="table">
         <thead>
             <tr>
