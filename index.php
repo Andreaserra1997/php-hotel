@@ -1,5 +1,4 @@
 <?php
-
 $hotels = [
     [
         'name' => 'Hotel Belvedere',
@@ -37,6 +36,34 @@ $hotels = [
         'distance_to_center' => 50
     ],
 ];
+
+$parking = isset($_GET['parking']);
+$min_rating = $_GET['rating'] ?? '';
+
+$arr_filtered = $hotels;
+
+if($parking) {
+    $arr_filtered_temp = [];
+
+    foreach ($arr_filtered as $hotel) {
+        if ($hotel['parking']) {
+            $arr_filtered_temp[] = $hotel;
+        }
+    }
+    $arr_filtered = $arr_filtered_temp;
+}
+
+if($min_rating) {
+    $arr_filtered_temp = [];
+
+    foreach ($arr_filtered as $hotel) {
+        if ($hotel['vote'] >= $min_rating) {
+            $arr_filtered_temp[] = $hotel;
+        }
+    }
+
+    $arr_filtered = $arr_filtered_temp;
+}
 ?>
 
 <!DOCTYPE html>
@@ -53,16 +80,17 @@ $hotels = [
 <body>
     <form action="" method="get">
         <div>
-            <label for="parking">Parcheggio</label>
-            <select id="parking">
-                <option name="" selected>Scegli</option>
-                <option name="">Con Parcheggio</option>
-            </select>
-            <label for="vote">Voto</label>
-            <input type="number" name="" id="vote">
+            <input class="form-check-input" type="checkbox" id="parking" name="parking" <?= $parking ? 'checked' : '' ?>>
+            <label class="form-check-label" for="parking">
+            Solo con parcheggio
+            </label>
             <button class="btn btn-primary" type="submit">Cerca</button>
             <button class="btn btn-secondary" type="reset">Annulla</button>
 		</div>
+        <div class="mb-3 d-flex">
+            <label for="rating" class="form-label"> Voto Minimo</label>
+            <input type="number" class="form-control" id="rating" name="rating" value="<?= $min_rating ?>">
+        </div>
     </form>
     <table class="table">
         <thead>
@@ -75,9 +103,9 @@ $hotels = [
             </tr>
         </thead>
         <tbody><?php 
-            foreach ($hotels as $hotel) { ?>
+            foreach ($arr_filtered as $hotel) { ?>
             <tr>
-                <td><?= $hotel['name'] ?></td>
+                <th><?= $hotel['name'] ?></th>
                 <td><?= $hotel['description'] ?></td>
                 <td><?= $hotel['parking'] ? 'Sì' : 'No' ?></td>
                 <td><?= $hotel['vote'] ?></td>
